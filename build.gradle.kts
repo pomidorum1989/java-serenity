@@ -1,5 +1,5 @@
 plugins {
-    id ("net.serenity-bdd.serenity-gradle-plugin") version "4.1.12"
+    id ("net.serenity-bdd.serenity-gradle-plugin") version "4.1.14"
     java
 }
 
@@ -63,10 +63,13 @@ serenity {
 }
 
 tasks.test {
-    useJUnitPlatform()
+    useJUnitPlatform() {
+        includeTags("Saucelab")
+    }
     testLogging {
         events("passed", "skipped", "failed")
         showStandardStreams = true
     }
     finalizedBy(tasks.aggregate)
+    jvmArgs = listOf("-XX:+EnableDynamicAgentLoading")
 }
